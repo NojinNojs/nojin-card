@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming soon!</title>
+    <style>
+        body {
+            background-color: #252323;
+            color: #e6e6e6;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background-color: #e6e6e6;
+            color: #252323;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3), 0 0 20px rgba(255, 255, 255, 0.3), 0 0 30px rgba(255, 255, 255, 0.3);
+            text-align: center;
+        }
+        .text {
+            display: block;
+        }
+        h1 {
+            color: #252323;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-shadow: none;
+        }
+        p {
+            color: #252323;
+            font-size: 1.2em;
+            text-shadow: none;
+        }
+        .button {
+            background-color: #252323;
+            border-radius: 20px;
+            font-size: larger;
+            color: #e6e6e6;
+            padding: 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3), 0 0 20px rgba(255, 255, 255, 0.3), 0 0 30px rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <script>
+        var count = 5;
+        var countdown = setInterval(function(){
+            count--;
+            if (count <= 0) {
+                clearInterval(countdown);
+                window.location.href = "index.html";
+            }
+            document.getElementById('countdownText').innerHTML = "You will be automaticly back in " + count + "s";
+        }, 1000);
+    </script>
+    <div class="container">
+        <h1 class="text">Coming Soon! back next time</h1>
+        <p class="text">We are currently working on something awesome. Stay tuned!</p>
+        <p id="countdownText" class="text">You will be automatically back in 5s</p>
+        <button onclick="window.location.href='index.html'" class="button">Back To Card</button>
+    </div>
+</body>
+</html>
