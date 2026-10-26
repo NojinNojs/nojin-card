@@ -9,3 +9,6 @@ build/
 qa/
 ui/
 .codex-*.md
+
+# screenshots
+*.png
