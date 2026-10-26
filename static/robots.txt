@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nojin.is-a.dev/sitemap.xml

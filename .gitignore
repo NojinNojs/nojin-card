@@ -1,0 +1,11 @@
+node_modules/
+.svelte-kit/
+build/
+.vercel
+.env
+.env.*
+
+# local working files
+qa/
+ui/
+.codex-*.md

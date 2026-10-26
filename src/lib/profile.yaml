@@ -1,0 +1,130 @@
+name:
+  given: Nojs
+  family: Nojin
+  display: Nojin
+handle: NojinNojs
+role: programmer
+domain: nojin.is-a.dev
+stack:
+  - TypeScript
+  - Rust
+  - Python
+  - Svelte
+  - Bun
+channels:
+  - id: x
+    label: X
+    url: https://x.com/NojsNojin
+    hidden: false
+  - id: discord
+    label: Discord
+    url: https://discordapp.com/users/482802065681416193
+    hidden: false
+  - id: trakteer
+    label: Trakteer
+    url: https://trakteer.id/NojsNojin
+    hidden: false
+  - id: github
+    label: GitHub
+    url: https://github.com/NojinNojs
+    hidden: false
+  - id: line
+    label: Line
+    hidden: true
+  - id: instagram
+    label: Instagram
+    hidden: true
+  - id: website
+    label: My website
+    hidden: true
+operator:
+  image: /art/art-lain.webp
+  avif: /art/art-lain.avif
+  webp: /art/art-lain-lossy.webp
+  og: /art/og-lain.jpg
+  label: Lain Iwakura in a school uniform
+  prompt: nojin@wired:~$
+theme:
+  background: '#07132B'
+  surface: '#0B1C3D'
+  text: '#EAF1FF'
+  muted: '#9FB4D8'
+  line: '#40608F'
+  accent: '#FFC27A'
+  texture: '#12294F'
+  scrim: '#050D1E'
+copy:
+  title: Nojin.
+  greeting: Hi. This is the whole site.
+  description: "I build software. Otherwise it's novels, a camera, and taking apart security, blockchains, and hardware."
+repositories:
+  capturedAt: null
+  source: committed snapshot
+  items:
+    - name: eve-ded-tracker
+      language: TypeScript
+      pushed_at: 2026-10-25T09:46:27Z
+      description:
+        Loot and profit tracker for EVE Online runs, built with Next.js and
+        Supabase.
+      url: https://github.com/NojinNojs/eve-ded-tracker
+    - name: komo
+      language: Rust
+      pushed_at: 2026-10-24T01:42:59Z
+      description: A virtual pet that lives in your terminal, written in Rust.
+      url: https://github.com/NojinNojs/komo
+    - name: karsa-bot
+      language: TypeScript
+      pushed_at: 2026-10-24T01:42:34Z
+      description:
+        Coffee stall economy bot for Discord, built with Bun, TypeScript,
+        and SQLite.
+      url: https://github.com/NojinNojs/karsa-bot
+    - name: NojinNojs
+      language: —
+      pushed_at: 2026-10-19T10:07:43Z
+      description: present day, present time.
+      url: https://github.com/NojinNojs/NojinNojs
+    - name: lyrics-transcriber
+      language: Python
+      pushed_at: 2026-10-19T08:21:34Z
+      description: CLI tool that generates word-by-word timed lyrics using OpenAI Whisper.
+      url: https://github.com/NojinNojs/lyrics-transcriber
+    - name: mellblue
+      language: TypeScript
+      pushed_at: 2026-10-19T08:21:28Z
+      description:
+        Online food store with order tracking and PDF receipts, built with
+        Laravel and React.
+      url: https://github.com/NojinNojs/mellblue
+    - name: toko-sparepart
+      language: Blade
+      pushed_at: 2026-10-19T08:21:25Z
+      description: Auto parts catalog and admin dashboard built with Laravel and
+        Tailwind CSS.
+      url: https://github.com/NojinNojs/toko-sparepart
+    - name: recreate-tapera
+      language: HTML
+      pushed_at: 2026-10-19T07:35:22Z
+      description: Frontend redesign concept for the BP Tapera web portal.
+      url: https://github.com/NojinNojs/recreate-tapera
+    - name: tobuk-app
+      language: TypeScript
+      pushed_at: 2025-12-04T06:57:53Z
+      description: Online bookstore and inventory app built with Laravel and React.
+      url: https://github.com/NojinNojs/tobuk-app
+    - name: if-ever-you
+      language: JavaScript
+      pushed_at: 2025-09-08T15:32:36Z
+      description: '[Archived Fork] Web audio player with synchronized lyric display.'
+      url: https://github.com/NojinNojs/if-ever-you
+    - name: to-do-next
+      language: TypeScript
+      pushed_at: 2025-09-07T04:14:04Z
+      description: Task manager with role-based access, built with Next.js and SQLite.
+      url: https://github.com/NojinNojs/to-do-next
+    - name: moment
+      language: TypeScript
+      pushed_at: 2025-04-16T09:02:38Z
+      description: Personal finance and expense tracker built with TypeScript and React.
+      url: https://github.com/NojinNojs/moment
