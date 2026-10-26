@@ -2,69 +2,29 @@
 
 The page at [nojin.is-a.dev](https://nojin.is-a.dev). One screen: a name, a sentence, four links. No scroll, no cookie banner, no "let's connect".
 
-It's a small site, so most of the interesting part is what I *didn't* add. Below are the questions I get asked about it, answered properly.
+## why this exists at all
 
-## why not just use a link-in-bio service?
+I tried the usual link-in-bio services first. Four links, and the page still wanted a few hundred kilobytes of JavaScript, a tracking pixel, and a subdomain I didn't own. That felt backwards for something that is, structurally, a business card. So the page became a document instead: one HTML file that reads fine with JavaScript switched off, and a handful of files around it.
 
-Because four links don't need 200–300 KB of JavaScript, a tracking pixel, and a subdomain I don't own. A page this simple should be a document.
+## how it's built, and why
 
-## why SvelteKit for a single page?
+It's SvelteKit compiled with `adapter-static`. I wanted components and a build step without a framework running in the browser, and that's exactly what this setup gives: I write `.svelte` files, the build emits plain HTML, and nothing of the framework ends up in the bundle. Astro would have worked too, and it's what I'd switch to if this ever grew a blog or a feed. Hand-written HTML would also work today, but the moment a second page exists the header, the links and the meta tags get copy-pasted, and that's how small projects start rotting.
 
-I wanted components and a build step without shipping a framework runtime. SvelteKit with `adapter-static` gives me that: I write `.svelte` files, the build emits plain HTML, and nothing of the framework reaches the browser.
-
-Alternatives I considered: Astro would also work and would be my pick if this grew a blog. Hand-written HTML would work today, but then the header, the link list and the meta tags get copy-pasted the moment a second page exists.
-
-## why is there no client-side JavaScript framework?
-
-The page has exactly two bits of behaviour: `1`–`4` open links, and the artwork shifts a few pixels with the pointer. A runtime for that costs ~99 KB, which is more than the entire rest of the page.
-
-So it's prerendered HTML plus one `static/app.js` file, about 2 KB:
+The reason there's no client runtime isn't ideological, it's arithmetic. The page has two behaviours: keys `1`–`4` open the matching link, and the artwork shifts a few pixels when the pointer moves. Hydrating Svelte for that cost around 99 KB — more than every other asset on the page combined. So I removed it and wrote `static/app.js` by hand instead. It's two kilobytes, it has no dependencies, and if it fails the page still works; you just lose the shortcuts.
 
 ```js
-// keys 1-4 open the matching link, pointer parallax for mouse users only
-// no framework, no polyfill, no dependency
+// keys 1-4 open a link, pointer parallax for mice only, nothing else
 ```
 
-Everything else — layout, the entrance animation, hover states, reduced-motion — is CSS. If you disable JavaScript, the page still reads perfectly; you just lose the shortcuts.
+Everything visual — layout, the entrance animation, hover states, the reduced-motion kill switch — lives in CSS. Bun is in the toolchain only because install and build are faster with it; nothing of Bun reaches production, and npm or pnpm would work the same. Tailwind isn't there because one screen with one design doesn't need a build-time CSS pipeline. The tokens are custom properties inside `@layer`, so the spacing scale and the amber accent are named once and used everywhere. On a project with ten components and a design system I'd reach for Tailwind without arguing — this isn't that project.
 
-## why Bun?
+Content sits apart from the markup in [`src/lib/profile.yaml`](src/lib/profile.yaml): name, greeting, description, the four links, the theme. [`src/lib/schema.ts`](src/lib/schema.ts) validates it with Zod before the build finishes, so a typo fails with the field name instead of shipping a page with an empty row. That's also what makes editing from a phone realistic: open the file, change a line, push.
 
-For install and script speed, honestly. There's no Bun in production: the output is static files. If you prefer npm or pnpm, `package.json` works the same.
+## the weight argument
 
-## why no Tailwind?
+Most of the budget went into three decisions. The illustration is served as AVIF at about 34 KB, with a WebP fallback through `<picture>`, because a JPEG of the same quality was both bigger and softer at this size. It's a 736×977 portrait and it's never stretched or cropped to fit a viewport — it's sized to itself and its edges are feathered with a CSS mask into a gradient sampled from the artwork's own corners. The pixel font is Silkscreen, subset to the glyphs that actually appear: 2.6 KB, self-hosted, no request to Google. Body text uses the system UI font, which costs nothing and looks sharper than a webfont on every platform.
 
-One screen doesn't justify a build-time CSS pipeline. The design tokens are CSS custom properties inside `@layer`, so spacing and colour are named once:
-
-```css
---space-3: 12px;
---accent: #FFC27A;
-```
-
-On a bigger project with a design system and multiple components, I'd reach for Tailwind or a component library without arguing. This isn't that project.
-
-## why YAML instead of hardcoded text?
-
-So the content is separate from the markup, and so I can edit from my phone without touching a component. `src/lib/schema.ts` validates it with Zod, which means a typo fails the build with the field name instead of shipping a page with an empty link.
-
-The whole readable site — name, greeting, description, four links, theme — lives in [`src/lib/profile.yaml`](src/lib/profile.yaml).
-
-## why AVIF and WebP instead of one JPEG?
-
-The illustration is the only heavy asset, so it gets the good encoders: AVIF at ~34 KB with a WebP fallback through `<picture>`. A JPEG at the same quality was bigger and looked worse at this size.
-
-The image is never stretched or cropped to fit a viewport. It's a 736×977 portrait, sized to itself, with a CSS mask feathering its edges into a gradient sampled from the artwork's own corners.
-
-## why a subset font?
-
-Silkscreen is the pixel face used for the name and labels. I subset it to the glyphs actually on the page: **2.6 KB** instead of a full family, and no request to Google Fonts. The body text uses the system UI font, which costs nothing and renders sharper.
-
-## what about SEO and sharing?
-
-`robots.txt` and `sitemap.xml` are static files. Canonical, `og:*` and JSON-LD `Person` all point at `nojin.is-a.dev`, so a search engine knows the name is "Nojs Nojin" and the page is the same person as the links. There's an OG image at 1200×630 for link previews.
-
-`nojin.vercel.app` 308-redirects to the real domain through `vercel.json`, because two addresses for one page is one too many.
-
-## what's the actual weight?
+All told the page is about 52 KB raw and around 42 KB over the wire, image included, with zero third-party requests:
 
 | | raw | over the wire |
 |---|---|---|
@@ -73,15 +33,15 @@ Silkscreen is the pixel face used for the name and labels. I subset it to the gl
 | `app.js` | 2.0 KB | 0.8 KB |
 | Silkscreen subset | 2.6 KB | 2.6 KB |
 | Artwork (AVIF) | 34 KB | 34 KB |
-| **total** | **~52 KB** | **~42 KB**, 0 third-party requests |
+| **total** | **~52 KB** | **~42 KB** |
 
-## what did you leave out on purpose?
+Search engines get honest metadata rather than decoration: `robots.txt` and `sitemap.xml` as static files, canonical and `og:*` pointing at the real domain, and JSON-LD `Person` carrying the full name and the same links that are on the page. The old `nojin.vercel.app` address 308-redirects to the domain through `vercel.json`, because two addresses for one page is one too many.
 
-Analytics, a theme toggle, a cookie banner, a "back to top" button (there's nowhere to scroll), a contact form, and any animation that isn't either an entrance or feedback for an action.
+## what isn't there
 
-## what would you change if this had to grow?
+No analytics, no theme toggle, no cookie banner, no contact form, no back-to-top button (there is nowhere to scroll), and no animation that isn't either an entrance or feedback for something you did. Each of those is easy to add and each one would have made the page heavier without answering a question a visitor actually has.
 
-Keep the budget. Prerender every route, keep the client runtime at zero, and only add JavaScript where a static document genuinely can't do the job. If it needed writing and a feed, I'd move to Astro and keep exactly this discipline.
+If this ever has to grow, the discipline stays and the tool changes: prerender every route, keep the client runtime at zero, and add JavaScript only where a static document genuinely cannot do the job.
 
 ## running it
 
