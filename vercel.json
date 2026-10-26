@@ -1,0 +1,10 @@
+{
+	"redirects": [
+		{
+			"source": "/(.*)",
+			"has": [{ "type": "host", "value": "nojin.vercel.app" }],
+			"destination": "https://nojin.is-a.dev/$1",
+			"permanent": true
+		}
+	]
+}
